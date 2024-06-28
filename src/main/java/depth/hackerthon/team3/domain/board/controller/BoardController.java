@@ -1,8 +1,12 @@
 package depth.hackerthon.team3.domain.board.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import depth.hackerthon.team3.domain.board.domain.Board;
+import depth.hackerthon.team3.domain.board.dto.GenerateShavedIceReq;
 import depth.hackerthon.team3.domain.board.dto.RegisterMyBoardReq;
 import depth.hackerthon.team3.domain.board.service.BoardService;
+import depth.hackerthon.team3.domain.gpt.service.GptService;
+import depth.hackerthon.team3.domain.s3.service.S3Uploader;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -23,6 +27,8 @@ import java.util.Optional;
 public class BoardController {
 
     private final BoardService boardService;
+    private final GptService gptService;
+    private final S3Uploader s3Uploader;
 
     @Operation(summary = "빙수의 전당 목록 조회", description = "모든 빙수 게시물을 조회합니다.")
     @GetMapping("/all")
@@ -43,5 +49,11 @@ public class BoardController {
     @PostMapping()
     public ResponseEntity<?> postMyBoard(@Valid @RequestBody RegisterMyBoardReq registerMyBoardReq) {
         return boardService.registerMyBoard(registerMyBoardReq);
+    }
+
+    @GetMapping("/generate")
+    public ResponseEntity<?> generateImage(@RequestBody GenerateShavedIceReq generateShavedIceReq) throws JsonProcessingException {
+        String prompt = generateShavedIceReq.getItem1() + ", " + generateShavedIceReq.getItem2() + ", " + generateShavedIceReq.getItem3();
+        return gptService.getImageFromDallE(prompt);
     }
 }
