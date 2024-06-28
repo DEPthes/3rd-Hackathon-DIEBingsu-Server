@@ -5,6 +5,7 @@ import depth.hackerthon.team3.domain.board.dto.RegisterMyBoardReq;
 import depth.hackerthon.team3.domain.board.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +41,7 @@ public class BoardController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> postMyBoard(@RequestBody RegisterMyBoardReq registerMyBoardReq) {
+    public ResponseEntity<?> postMyBoard(@Valid @RequestBody RegisterMyBoardReq registerMyBoardReq) {
         return boardService.registerMyBoard(registerMyBoardReq);
     }
 }
