@@ -5,6 +5,7 @@ import depth.hackerthon.team3.domain.board.domain.repository.BoardRepository;
 import depth.hackerthon.team3.domain.user.domain.User;
 import depth.hackerthon.team3.domain.user.domain.repository.UserRepository;
 import depth.hackerthon.team3.domain.user.dto.MyShavedIceRes;
+import depth.hackerthon.team3.domain.user.dto.CheckPasswordReq;
 import depth.hackerthon.team3.domain.user.dto.UserReq;
 import depth.hackerthon.team3.global.payload.ApiResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -68,5 +69,23 @@ public class UserService {
 
         return ResponseEntity.ok(apiResponse);
     }
+
+    // 내 빙수 상세 조회
+
+    // 비밀번호 확인
+    public ResponseEntity<?> checkPassword(Long boardId, CheckPasswordReq checkPasswordReq) {
+        Board board = boardRepository.findByBoardId(boardId);
+        String msg = "비밀번호가 일치하지 않습니다.";
+        if (Objects.equals(board.getBoardPassword(), checkPasswordReq.getPassword())) {
+            msg = "비밀번호가 일치합니다.";
+        }
+        ApiResponse apiResponse = ApiResponse.builder()
+                    .check(true)
+                    .information(msg)
+                    .build();
+        return ResponseEntity.ok(apiResponse);
+    }
+
     // 내 빙수 삭제
+
 }
