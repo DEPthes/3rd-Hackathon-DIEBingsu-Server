@@ -20,9 +20,10 @@ public class GptConfig {
     public static final String URL = "https://api.openai.com/v1/chat/completions";
 
     public static final String CONTENT =
-            """
-            
-            """;
+        """
+        Please generate a full image of a shaved ice dessert in a bowl. The background should be consistent across all requests.
+        The image must include the following three elements as toppings or decorations on the shaved ice :
+        """;
 
 
 }
