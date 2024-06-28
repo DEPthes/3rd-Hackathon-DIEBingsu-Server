@@ -31,20 +31,29 @@ public class BoardController {
     private final GptService gptService;
     private final S3Uploader s3Uploader;
 
-    @Operation(summary = "빙수의 전당 목록 조회", description = "모든 빙수 게시물을 조회합니다.")
+    //빙수의 정당 목록 조회
     @GetMapping("/all")
-    public List<Board> getAllBoards() {
-        return boardService.getAllBoards();
+    public ResponseEntity<?> getAllBoards() {
+        ResponseEntity<?> responseEntity = boardService.getAllBoards();
+        return ResponseEntity.ok(responseEntity.getBody());
     }
-    @Operation(summary = "빙수 상세 조회", description = "특정 ID의 빙수 게시물을 조회합니다.")
+
+    //빙수 상세 조회
     @GetMapping("/{boardId}")
-    public Optional<Board> getBoardById(@PathVariable("boardId") Long boardId) {
-        return boardService.getBoardById(boardId);
+    public ResponseEntity<?> getBoardId(@PathVariable("boardId") Long boardId, String deviceId) {
+        return boardService.getBoardById(boardId, deviceId);
     }
-    @Operation(summary = "빙수 정렬 조회", description = "특정 기준으로 빙수 게시물을 정렬하여 조회합니다.")
+
     @GetMapping("/sorted")
-    public List<Board> getBoardsSorted(@RequestParam String sortBy) {
-        return boardService.getBoardsSorted(sortBy);
+    public ResponseEntity<?> getBoardsSorted(@RequestParam String sortBy) {
+        List<Board> sortedBoards = (List<Board>) boardService.getBoardsSorted(sortBy);
+        return ResponseEntity.ok(sortedBoards);
+    }
+
+    @PostMapping("/{boardId}/react/{reactionNumber}")
+    public ResponseEntity<?> reactToBoard(@PathVariable("boardId") Long boardId,
+                                          @PathVariable("reactionNumber") int reactionNumber) {
+        return boardService.reactToBoard(boardId, reactionNumber);
     }
 
     @PostMapping()

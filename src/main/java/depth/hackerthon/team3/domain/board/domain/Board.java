@@ -3,14 +3,12 @@ package depth.hackerthon.team3.domain.board.domain;
 import depth.hackerthon.team3.domain.common.BaseEntity;
 import depth.hackerthon.team3.domain.user.domain.User;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 public class Board extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
