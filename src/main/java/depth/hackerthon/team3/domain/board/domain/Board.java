@@ -1,4 +1,4 @@
-package depth.hackerthon.team3.board.domain.entity;
+package depth.hackerthon.team3.domain.board.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

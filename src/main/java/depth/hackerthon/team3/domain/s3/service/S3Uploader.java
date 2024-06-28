@@ -1,4 +1,4 @@
-package depth.hackerthon.team3.domain.s3.application;
+package depth.hackerthon.team3.domain.s3.service;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
