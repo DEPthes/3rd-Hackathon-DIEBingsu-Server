@@ -1,10 +1,12 @@
 package depth.hackerthon.team3.domain.board.controller;
 
 import depth.hackerthon.team3.domain.board.domain.Board;
+import depth.hackerthon.team3.domain.board.dto.RegisterMyBoardReq;
 import depth.hackerthon.team3.domain.board.service.BoardService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,4 +39,8 @@ public class BoardController {
         return boardService.getBoardsSorted(sortBy);
     }
 
+    @PostMapping()
+    public ResponseEntity<?> postMyBoard(@RequestBody RegisterMyBoardReq registerMyBoardReq) {
+        return boardService.registerMyBoard(registerMyBoardReq);
+    }
 }

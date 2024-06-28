@@ -3,9 +3,16 @@ package depth.hackerthon.team3.domain.board.service;
 
 import depth.hackerthon.team3.domain.board.domain.Board;
 import depth.hackerthon.team3.domain.board.domain.repository.BoardRepository;
+import depth.hackerthon.team3.domain.board.dto.RegisterMyBoardReq;
+import depth.hackerthon.team3.domain.user.domain.User;
+import depth.hackerthon.team3.domain.user.domain.repository.UserRepository;
+import depth.hackerthon.team3.global.payload.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
     // 빙수 목록 조회 메서드
     public List<Board> getAllBoards() {
         return boardRepository.findAll();
@@ -27,4 +35,26 @@ public class BoardService {
         return boardRepository.findAll(Sort.by(Sort.Direction.DESC, sortBy));
     }
 
+    // 내 게시글 작성
+    @Transactional
+    public ResponseEntity<?> registerMyBoard(RegisterMyBoardReq registerMyBoardReq) {
+        User user = userRepository.findByDeviceId(registerMyBoardReq.getDeviceId());
+        Board board = Board.builder()
+                .user(user)
+                .shavedIceName(registerMyBoardReq.getShavedIceName())
+                .description(registerMyBoardReq.getDescription())
+                .boardPassword(registerMyBoardReq.getBoardPassword())
+                .image(registerMyBoardReq.getImage())
+                .item1(registerMyBoardReq.getItem1())
+                .item2(registerMyBoardReq.getItem2())
+                .item3(registerMyBoardReq.getItem3())
+                .build();
+        boardRepository.save(board);
+
+        ApiResponse apiResponse = ApiResponse.builder()
+                .check(true)
+                .information("내 빙수가 등록되었습니다.")
+                .build();
+        return ResponseEntity.ok(apiResponse);
+    }
 }

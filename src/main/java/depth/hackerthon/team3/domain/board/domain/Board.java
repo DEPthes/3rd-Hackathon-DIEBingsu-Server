@@ -33,15 +33,16 @@ public class Board extends BaseEntity {
     private User user;
 
     @Builder
-    public Board(String boardPassword, String image, String shavedIceName, String description, int reaction1, int reaction2, int reaction3, int reaction4, int reaction5, String item1, String item2, String item3) {
+    public Board(User user, String boardPassword, String image, String shavedIceName, String description, String item1, String item2, String item3) {
+        this.user = user;
         this.boardPassword = boardPassword;
         this.description = description;
         this.image = image;
-        this.reaction1 = reaction1;
-        this.reaction2 = reaction2;
-        this.reaction3 = reaction3;
-        this.reaction4 = reaction4;
-        this.reaction5 = reaction5;
+        this.reaction1 = 0;
+        this.reaction2 = 0;
+        this.reaction3 = 0;
+        this.reaction4 = 0;
+        this.reaction5 = 0;
         this.shavedIceName = shavedIceName;
         this.item1 = item1;
         this.item2 = item2;
