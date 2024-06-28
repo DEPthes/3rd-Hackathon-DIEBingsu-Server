@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -47,8 +48,8 @@ public class BoardController {
     }
 
     @PostMapping()
-    public ResponseEntity<?> postMyBoard(@Valid @RequestBody RegisterMyBoardReq registerMyBoardReq) {
-        return boardService.registerMyBoard(registerMyBoardReq);
+    public ResponseEntity<?> postMyBoard(@RequestPart MultipartFile image, @Valid @RequestPart RegisterMyBoardReq registerMyBoardReq) {
+        return boardService.registerMyBoard(image, registerMyBoardReq);
     }
 
     @GetMapping("/generate")
