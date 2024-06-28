@@ -38,3 +38,5 @@ out/
 
 ### YML ###
 /src/main/resources/application-database.yml
+/src/main/resources/application-gpt.yml
+/src/main/resources/application-s3.yml

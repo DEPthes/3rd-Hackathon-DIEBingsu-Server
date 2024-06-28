@@ -7,6 +7,8 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource(value = { "classpath:application-database.yml" }, factory = YamlPropertySourceFactory.class)
+@PropertySource(value = { "classpath:application-gpt.yml" }, factory = YamlPropertySourceFactory.class)
+@PropertySource(value = { "classpath:application-s3.yml" }, factory = YamlPropertySourceFactory.class)
 public class Team3Application {
 
 	public static void main(String[] args) {
